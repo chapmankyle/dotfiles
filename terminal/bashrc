@@ -1,0 +1,302 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
+# for examples
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTSIZE=1000			# sets history length (1000 lines)
+HISTFILESIZE=2000
+HISTCONTROL=ignoreboth:erasedups
+HISTIGNORE='ls:ll:la:lr:cd:exit:clear:history:startmyday:up:matrix:exec:man:clean:c'
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned
+# off by default to not distract the user: the focus in a terminal window
+# should be on the output of commands, not on the prompt
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+if [ "$color_prompt" = yes ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# colored GCC warnings and errors
+#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -la'
+alias lr='ls -R'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Alias definitions.
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+if [ -f ~/.config/exercism/exercism_completion.bash ]; then
+  source ~/.config/exercism/exercism_completion.bash
+fi
+
+# aliases
+alias matrix='echo -e "\e[32m"; while :; do for i in {1..16}; do r="$(($RANDOM % 2))"; if [[ $(($RANDOM % 5)) == 1 ]]; then if [[ $(($RANDOM % 4)) == 1 ]]; then v+="\e[1m $r   "; else v+="\e[2m $r   "; fi; else v+="     "; fi; done; echo -e "$v"; v=""; done'
+alias u='sudo apt-get update'
+alias v='gnome-terminal -- vim'
+
+# displays the full working directory in the top bar
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+
+# mapping colours
+grey='\[\033[1;30m\]'
+red='\[\033[0;31m\]'
+RED='\[\033[1;31m\]'
+green='\[\033[0;32m\]'
+GREEN='\[\e[0;38;5;82m\]'
+yellow='\[\033[0;33m\]'
+YELLOW='\[\e[1;38;3;33m\]'
+white='\[\033[0;37m\]'
+WHITE='\[\033[1;37m\]'
+blue='\[\033[0;34m\]'
+BLUE='\[\e[0;38;5;33m\]'
+NC='\[\033[0m\]'
+
+export PS1="${BLUE}\u@${GREEN}\h:${YELLOW}\W${NC}$ "
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+# compiles c programs
+c ()
+{
+	c_file=$1
+	if [ $# -eq 1 ] ; then
+		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		   -ansi -pedantic ${c_file} -o ${c_file:0:-2}
+	elif [ $# -gt 1 ] ; then
+		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		   -ansi -pedantic "$@" -o ${c_file:0:-2}
+	else
+		echo "Usage: c <c_file> ... <optional_c_files>"
+	fi
+}
+
+# compiles assembly programs
+ac ()
+{
+	asm=$1
+	if [ $# -eq 1 ] ; then
+		nasm -f elf32 ${asm}
+		gcc -m32 "${asm:0:-4}.o" -o ${asm:0:-4}
+	else
+		echo "Usage: ac <asm_file>"
+	fi
+}
+
+# creates a c file with a template
+temp ()
+{
+	if [ $# -eq 1 ] ; then
+ 		touch $1
+ 		echo -e "#include <stdio.h>\n"
+		echo -e "#include <stdlib.h>\n"
+		echo -e "\nint main(int argc, char *argv[])\n{\n\treturn 0;\n}" > $1
+	else
+ 		echo "Usage: temp <c file>"
+	fi
+}
+
+# converts hexadecimal to decimal
+hex ()
+{
+	va=$1
+	hexa=${va:2}
+	dec=$((16#${hexa}))
+	echo "${dec}"
+}
+
+# clean - cleans the current directory from the mess caused by GVim
+clean ()
+{
+	find . -maxdepth 1 -name "*~" -type f -delete
+	find . -maxdepth 1 -name "*.swp" -type f -delete
+	find . -maxdepth 1 -name "*.o" -type f -delete
+	find . -maxdepth 1 -name "*.pyc" -type f -delete
+}
+
+# cleans executables in current directory
+cleanexec ()
+{
+	find . -maxdepth 1 ! -name "*.*" -type f -delete
+}
+
+# dirsize - finds directory sizes and lists them for current directory
+dirsize ()
+{
+  du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
+  egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+  egrep '^ *[0-9.]*M' /tmp/list
+  egrep '^ *[0-9.]*G' /tmp/list
+  rm -rf /tmp/list
+}
+
+# up - traverses up the directory list
+up ()
+{
+  for D in $(seq 1 $1);
+    do
+	  cd ../
+	done
+}
+
+# extract - extracts files given a filename
+extract () 
+{
+  if [ -f $1 ] ; then
+    case $1 in
+	  *.tar.bz2)	tar xvjf $1		;;
+	  *.tbz2)		tar xvjf $1		;;
+	  *.tar.gz)		tar xvzf $1		;;
+	  *.tgz)		tar xvzf $1		;;
+	  *.tar)		tar xvf $1		;;
+	  *.bz2)		bunzip2 $1		;;
+	  *.rar)		unrar x $1		;;
+	  *.gz)			gunzip $1		;;
+	  *.zip)		unzip $1		;;
+	  *.Z)			uncompress $1	;;
+	  *.7z)			7z x $1			;;
+	  *)			echo "No clue how to extract '$1' .." ;;
+	esac
+  else
+    echo "'$1' is not a valid file! Try again :)"
+  fi
+}
+
+# compress - compresses files given a filename and what to compress
+compress ()
+{
+  if [ -n "$1" ] ; then
+    file=$1
+    case $file in
+	  *.tar.bz2)	tar cvjf $file $* 	;;
+	  *.tbz2)		tar cvjf $file $*	;;
+	  *.tar.gz)		tar cvzf $file $*	;;
+	  *.tgz)		tar cvzf $file $*	;;
+	  *.tar)		tar cvf $file $*	;;
+	  *.bz2)		bzip2 $file $*		;;
+	  *.rar)		rar a $file $*		;;
+	  *.gz)			gzip $file $*		;;
+	  *.zip)		zip $file $*		;;
+	  *.Z)			compress $file $*	;;
+	  *.7z)			7z a $file $*		;;
+	  *)			echo "No clue how to compress '$file' .." ;;
+	esac
+  else
+    echo "usage: compress <yourmom.tar.bz2> ./your ./mom"
+  fi
+}
+
+# remindme - reminds me to do something
+remindme() 
+{
+  if [ "$#" -lt 2 ]; then
+    echo -e "Usage: remindme [time] '[message]'"
+    echo -e "Example: remindme 50s 'check mail'"
+    echo -e "Example: remindme 10m 'go to class'"
+    exit 0
+  fi
+  if [ "$#" -gt 2 ]; then
+    echo -e "Usage: remindme [time] '[message]'"
+    echo -e "Example: remindme 50s 'check mail'"
+    echo -e "Example: remindme 10m 'go to class'"
+    exit 0
+  fi
+  if [ "$#" == 2 ]; then
+    sleep $1 && notify-send -t 15000 "$2" & echo 'Reminder set'
+  fi
+}

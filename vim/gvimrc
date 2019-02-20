@@ -1,0 +1,4 @@
+syntax enable
+set guifont=Hack
+set background=dark
+colorscheme solarized

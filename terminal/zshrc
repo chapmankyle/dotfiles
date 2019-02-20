@@ -1,0 +1,224 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="/home/kyle/.oh-my-zsh"
+export VISUAL=vim
+export EDITOR=$VISUAL
+
+autoload colors && colors
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="agnoster"
+
+# removes the kyle@unix from start
+DEFAULT_USER="kyle"
+prompt_context(){}
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# don't put duplicate lines or lines starting with space in the history.
+HISTSIZE=1000			# sets history length (1000 lines)
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+HISTFILESIZE=2000
+
+# setting options
+setopt NO_BG_NICE		# no background tasks
+setopt NO_HUP
+setopt LOCAL_OPTIONS
+setopt LOCAL_TRAPS
+
+setopt HIST_VERIFY
+setopt HIST_IGNORE_SPACE
+setopt APPEND_HISTORY	# appends to history
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_ALL_DUPS		# ignore duplicates
+
+# aliases
+alias ll='ls -alF'
+alias la='ls -la'
+alias lr='ls -R'
+alias l='ls -CF'
+alias u='sudo apt-get update'
+alias v='gnome-terminal -- vim'
+
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+
+# compiles c programs
+c ()
+{
+	c_file=$1
+	if [ $# -eq 1 ] ; then
+		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		   -ansi -pedantic ${c_file} -o ${c_file:0:-2}
+	elif [ $# -gt 1 ] ; then
+		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		   -ansi -pedantic "$@" -o ${c_file:0:-2}
+	else
+		echo "Usage: c <c_file> ... <optional_c_files>"
+	fi
+}
+
+# compiles assembly programs
+ac ()
+{
+	asm=$1
+	if [ $# -eq 1 ] ; then
+		nasm -f elf32 ${asm}
+		gcc -m32 "${asm:0:-4}.o" -o ${asm:0:-4}
+	else
+		echo "Usage: ac <asm_file>"
+	fi
+}
+
+# creates a c file with a template
+temp ()
+{
+	if [ $# -eq 1 ] ; then
+ 		touch $1
+ 		echo -e "#include <stdio.h>\n"
+		echo -e "#include <stdlib.h>\n"
+		echo -e "\nint main(int argc, char *argv[])\n{\n\treturn 0;\n}" > $1
+	else
+ 		echo "Usage: temp <c file>"
+	fi
+}
+
+# converts hexadecimal to decimal
+hex ()
+{
+	va=$1
+	hexa=${va:2}
+	dec=$((16#${hexa}))
+	echo "${dec}"
+}
+
+# clean - cleans the current directory from the mess caused by vim
+clean ()
+{
+	find . -maxdepth 1 -name "*~" -type f -delete
+	find . -maxdepth 1 -name "*.o" -type f -delete
+	find . -maxdepth 1 -name "*.swp" -type f -delete
+	find . -maxdepth 1 -name "*.pyc" -type f -delete
+}
+
+# cleans executables in current directory
+cleanexec ()
+{
+	find . -maxdepth 1 ! -name "*.*" -type f -delete
+}
+
+# cleans directory and all subdirectories
+cleandir ()
+{
+	find . -name "*~" -type f -delete
+	find . -name "*.o" -type f -delete
+	find . -name "*.swp" -type f -delete
+	find . -name "*.pyc" -type f -delete
+}
+
+# dirsize - finds directory sizes and lists them for current directory
+dirsize ()
+{
+  du -shx * .[a-zA-Z0-9_]* 2> /dev/null | \
+  egrep '^ *[0-9.]*[MG]' | sort -n > /tmp/list
+  egrep '^ *[0-9.]*M' /tmp/list
+  egrep '^ *[0-9.]*G' /tmp/list
+  rm -rf /tmp/list
+}
+
+# up - traverses up the directory list
+up ()
+{
+  for D in $(seq 1 $1);
+    do
+	  cd ../
+	done
+}
