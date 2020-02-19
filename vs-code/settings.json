@@ -12,16 +12,42 @@
 	"editor.renderIndentGuides": true,
 	"editor.renderWhitespace": "boundary",
 	"editor.minimap.enabled": true,
-	"editor.fontFamily": "Hack",
-	// "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
 	"editor.fontSize": 14,
+	"editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+	// "editor.fontFamily": "Hack, Consolas, 'Courier New', monospace",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
 	"editor.suggestSelection": "first",
+	"editor.formatOnSave": false,
 	"editor.rulers": [
 		80
 	],
+
+	// ***************
+	// ** LANGUAGES **
+	// ***************
+
+	"[vue]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+	},
+	"[html]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
+	"[typescript]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
+	"[javascript]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+	},
 
 	// ***********
 	// ** FILES **
@@ -36,7 +62,8 @@
 	"files.associations": {
 		"Dockerfile-centos": "dockerfile",
 		"Dockerfile_*": "dockerfile",
-		"Dockerfile-*": "dockerfile"
+		"Dockerfile-*": "dockerfile",
+		"*-Dockerfile": "dockerfile"
 	},
 
 	// ***************
@@ -47,7 +74,6 @@
 	"workbench.tree.indent": 10,
 	"workbench.editor.showIcons": true,
 	"workbench.tips.enabled": false,
-	"workbench.statusBar.feedback.visible": false,
 	"workbench.startupEditor": "newUntitledFile",
 	"workbench.colorCustomizations": {
 		"statusBar.background": "#212121",
@@ -58,7 +84,7 @@
 	// ************
 
 	"workbench.iconTheme": "file-icons",
-	"workbench.colorTheme": "One Dark Pro Bold",
+	"workbench.colorTheme": "One Dark Pro",
 
 	// ***********
 	// ** OTHER **
@@ -67,13 +93,9 @@
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	"python.jediEnabled": false,
 	"breadcrumbs.enabled": true,
-	"gitlens.views.repositories.location": "scm",
-	"gitlens.views.fileHistory.location": "explorer",
-	"gitlens.views.lineHistory.location": "explorer",
-	"gitlens.views.compare.location": "gitlens",
-	"gitlens.views.search.location": "gitlens",
-	"gitlens.currentLine.enabled": false,
-	"gitlens.hovers.currentLine.over": "line",
-	"gitlens.statusBar.alignment": "left",
 	"explorer.confirmDragAndDrop": false
+	"terminal.integrated.fontFamily": "Hack",
+	"java.configuration.checkProjectSettingsExclusions": false,
+	"java.errors.incompleteClasspath.severity": "ignore",
+	"latex-workshop.view.pdf.viewer": "tab"
 }
