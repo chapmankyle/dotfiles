@@ -1,6 +1,7 @@
 source $VIMRUNTIME/vimrc_example.vim
 
 set encoding=utf-8
+set termguicolors
 
 set diffexpr=MyDiff()
 function MyDiff()
@@ -47,6 +48,7 @@ endif
 call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'bluz71/vim-nightfly-guicolors'
 call plug#end()
 " End vim-plug and initialize
 
@@ -99,5 +101,4 @@ if !has('gui_running')
 	set background=dark
 endif
 
-" SIMPL
-au BufRead,BufNewFile *.simpl setfiletype simpl
+colorscheme nightfly
