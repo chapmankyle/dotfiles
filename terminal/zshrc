@@ -12,7 +12,7 @@ autoload colors && colors
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # removes the kyle@unix from start
 DEFAULT_USER="kyle"
@@ -70,8 +70,9 @@ prompt_context(){}
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=( git zsh-syntax-highlighting )
 
+source ~/.profile
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -123,7 +124,7 @@ setopt HIST_IGNORE_ALL_DUPS		# ignore duplicates
 
 # aliases
 alias ll='ls -alF'
-alias la='ls -la'
+alias la='ls -lah'
 alias lr='ls -R'
 alias l='ls -CF'
 alias u='sudo apt-get update'
@@ -131,15 +132,91 @@ alias v='gnome-terminal -- vim'
 
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
+# powerlevel9k stuff
+function sp {
+  git branch > /dev/null 2>&1 || return 1
+  git config user.initials
+}
+
+POWERLEVEL9K_DIR_BACKGROUND='237'
+POWERLEVEL9K_CUSTOM_GIT_PAIR="echo \$(sp)"
+POWERLEVEL9K_CUSTOM_GIT_PAIR_BACKGROUND="clear"
+POWERLEVEL9K_CUSTOM_GIT_PAIR_FOREGROUND="blue"
+POWERLEVEL9K_CUSTOM_GIT_PAIR_ICON="\u26CF"
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="clear"
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="012"
+POWERLEVEL9K_DIR_FOREGROUND='010'
+POWERLEVEL9K_DIR_HOME_BACKGROUND="clear"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="012"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="clear"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="012"
+POWERLEVEL9K_DIR_PATH_SEPARATOR="%F{008}/%F{cyan}"
+
+POWERLEVEL9K_DIR_ETC_BACKGROUND="clear"
+POWERLEVEL9K_ETC_ICON='%F{blue}\uf423'
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_FOREGROUND="red"
+POWERLEVEL9K_DIR_WRITABLE_FORBIDDEN_BACKGROUND="clear"
+
+POWERLEVEL9K_GO_ICON="\uf7b7"
+POWERLEVEL9K_GO_VERSION_BACKGROUND='clear'
+POWERLEVEL9K_GO_VERSION_FOREGROUND='081'
+
+POWERLEVEL9K_HOME_ICON="\ufb26"
+
+POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir dir_writable_joined custom_git_pair vcs_joined)
+POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%F{008}\u26C4%F{008}'
+
+POWERLEVEL9K_LINUX_MANJARO_ICON="\uf312 "
+POWERLEVEL9K_LINUX_UBUNTU_ICON="\uf31b "
+
+POWERLEVEL9K_MODE='nerdfont-complete'
+
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" \u279C "
+
+POWERLEVEL9K_NVM_BACKGROUND='clear'
+POWERLEVEL9K_NVM_FOREGROUND='green'
+
+POWERLEVEL9K_OS_ICON_BACKGROUND='clear'
+POWERLEVEL9K_OS_ICON_FOREGROUND='cyan'
+
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status go_version nvm os_icon)
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=''
+POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{008}\u26A1%F{008}'
+
+POWERLEVEL9K_SHORTEN_DELIMITER='%F{008} …%F{008}'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHORTEN_STRATEGY="none"
+
+POWERLEVEL9K_STATUS_ERROR_BACKGROUND="clear"
+POWERLEVEL9K_STATUS_ERROR_FOREGROUND="001"
+POWERLEVEL9K_STATUS_OK_BACKGROUND="clear"
+POWERLEVEL9K_STATUS_BACKGROUND="clear"
+POWERLEVEL9K_CARRIAGE_RETURN_ICON="\uf071"
+
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M \uE868  %d.%m}"
+
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='clear'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='green'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='clear'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='yellow'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='clear'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='green'
+
 # compiles c programs
 c ()
 {
 	c_file=$1
 	if [ $# -eq 1 ] ; then
-		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		gcc -lm -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
 		   -ansi -pedantic ${c_file} -o ${c_file:0:-2}
 	elif [ $# -gt 1 ] ; then
-		gcc -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
+		gcc -lm -m32 -ggdb -Wall -Wextra -Wno-variadic-macros -Wno-overlength-strings \
 		   -ansi -pedantic "$@" -o ${c_file:0:-2}
 	else
 		echo "Usage: c <c_file> ... <optional_c_files>"
@@ -222,3 +299,4 @@ up ()
 	  cd ../
 	done
 }
+
