@@ -14,7 +14,6 @@
 	"editor.minimap.enabled": true,
 	"editor.fontSize": 14,
 	"editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
-	// "editor.fontFamily": "Hack, Consolas, 'Courier New', monospace",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
@@ -31,7 +30,7 @@
 	"[vue]": {
 		"editor.detectIndentation": false,
 		"editor.tabSize": 2,
-		"editor.insertSpaces": true,
+		"editor.insertSpaces": true
 	},
 	"[html]": {
 		"editor.detectIndentation": false,
@@ -46,7 +45,17 @@
 	"[javascript]": {
 		"editor.detectIndentation": false,
 		"editor.tabSize": 2,
-		"editor.insertSpaces": true,
+		"editor.insertSpaces": true
+	},
+	"[yaml]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true
+	},
+	"[haskell]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true
 	},
 
 	// ***********
@@ -91,11 +100,22 @@
 	// ***********
 
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-	"python.jediEnabled": false,
 	"breadcrumbs.enabled": true,
-	"explorer.confirmDragAndDrop": false
-	"terminal.integrated.fontFamily": "Hack",
-	"java.configuration.checkProjectSettingsExclusions": false,
-	"java.errors.incompleteClasspath.severity": "ignore",
-	"latex-workshop.view.pdf.viewer": "tab"
+	"explorer.confirmDragAndDrop": false,
+	"latex-workshop.view.pdf.viewer": "tab",
+	"window.titleBarStyle": "custom",
+
+	"files.exclude": {
+		"**/.classpath": true,
+		"**/.project": true,
+		"**/.settings": true,
+		"**/.factorypath": true
+	},
+
+	"go.formatTool": "goimports",
+	"go.autocompleteUnimportedPackages": true,
+	"java.semanticHighlighting.enabled": true,
+	"python.languageServer": "Microsoft",
+	"python.showStartPage": false
 }
+
