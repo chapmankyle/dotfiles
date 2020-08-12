@@ -1,10 +1,11 @@
 # dotfiles
-Repo for all my dotfiles.
+Repo for all of the dotfiles I use.
 
 ## terminal :open_file_folder:
-All dotfiles for anything to do with the terminal.
-
-i.e. `.bashrc` or `.zshrc`
+Dotfiles used for `bash` and `zsh` shells, with files `bashrc` and `zshrc` respectively.
 
 ## vim :open_file_folder:
-All dotfiles for `vim` and `gvim`.
+Dotfiles used for `vim` and `gvim`, with files `vimrc` and `gvimrc` respectively.
+
+## vs-code :open_file_folder:
+Visual Studio Code configuration settings file `settings.json`
