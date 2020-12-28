@@ -13,7 +13,7 @@ esac
 HISTSIZE=1000			# sets history length (1000 lines)
 HISTFILESIZE=2000
 HISTCONTROL=ignoreboth:erasedups
-HISTIGNORE='ls:ll:la:lr:cd:exit:clear:history:startmyday:up:matrix:exec:man:clean:c'
+HISTIGNORE='ls:ll:la:lr:cd:exit:clear:history:up:matrix:exec:man:clean:c'
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -178,19 +178,6 @@ ac ()
 	fi
 }
 
-# creates a c file with a template
-temp ()
-{
-	if [ $# -eq 1 ] ; then
- 		touch $1
- 		echo -e "#include <stdio.h>\n"
-		echo -e "#include <stdlib.h>\n"
-		echo -e "\nint main(int argc, char *argv[])\n{\n\treturn 0;\n}" > $1
-	else
- 		echo "Usage: temp <c file>"
-	fi
-}
-
 # converts hexadecimal to decimal
 hex ()
 {
@@ -281,22 +268,3 @@ compress ()
   fi
 }
 
-# remindme - reminds me to do something
-remindme() 
-{
-  if [ "$#" -lt 2 ]; then
-    echo -e "Usage: remindme [time] '[message]'"
-    echo -e "Example: remindme 50s 'check mail'"
-    echo -e "Example: remindme 10m 'go to class'"
-    exit 0
-  fi
-  if [ "$#" -gt 2 ]; then
-    echo -e "Usage: remindme [time] '[message]'"
-    echo -e "Example: remindme 50s 'check mail'"
-    echo -e "Example: remindme 10m 'go to class'"
-    exit 0
-  fi
-  if [ "$#" == 2 ]; then
-    sleep $1 && notify-send -t 15000 "$2" & echo 'Reminder set'
-  fi
-}

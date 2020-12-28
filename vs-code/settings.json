@@ -13,7 +13,6 @@
 	"editor.renderWhitespace": "boundary",
 	"editor.minimap.enabled": true,
 	"editor.fontSize": 14,
-	"editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
 	"editor.multiCursorModifier": "ctrlCmd",
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
@@ -55,6 +54,11 @@
 	"[haskell]": {
 		"editor.detectIndentation": false,
 		"editor.tabSize": 4,
+		"editor.insertSpaces": true
+	},
+	"[elixir]": {
+		"editor.detectIndentation": false,
+		"editor.tabSize": 2,
 		"editor.insertSpaces": true
 	},
 
@@ -99,6 +103,7 @@
 	// ** OTHER **
 	// ***********
 
+	"terminal.integrated.fontFamily": "'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
 	"vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 	"breadcrumbs.enabled": true,
 	"explorer.confirmDragAndDrop": false,
@@ -115,7 +120,16 @@
 	"go.formatTool": "goimports",
 	"go.autocompleteUnimportedPackages": true,
 	"java.semanticHighlighting.enabled": true,
-	"python.languageServer": "Microsoft",
-	"python.showStartPage": false
+	"python.languageServer": "Pylance",
+	"python.showStartPage": false,
+	"vetur.format.defaultFormatter.html": "prettier",
+	"C_Cpp.default.cppStandard": "c++17",
+	"C_Cpp.default.cStandard": "c99",
+	"C_Cpp.default.intelliSenseMode": "gcc-x64",
+	"files.watcherExclude": {
+		"**/.bloop": true,
+		"**/.metals": true,
+		"**/.ammonite": true
+	},
+	"vetur.validation.template": false
 }
-

@@ -165,7 +165,7 @@ POWERLEVEL9K_HOME_ICON="\ufb26"
 
 POWERLEVEL9K_INSTALLATION_PATH=$ANTIGEN_BUNDLES/bhilburn/powerlevel9k
 
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir dir_writable_joined custom_git_pair vcs_joined)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir virtualenv dir_writable_joined custom_git_pair vcs_joined)
 POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%F{008}\u26C4%F{008}'
 
 POWERLEVEL9K_LINUX_MANJARO_ICON="\uf312 "
@@ -235,19 +235,6 @@ ac ()
 	fi
 }
 
-# creates a c file with a template
-temp ()
-{
-	if [ $# -eq 1 ] ; then
- 		touch $1
- 		echo -e "#include <stdio.h>\n"
-		echo -e "#include <stdlib.h>\n"
-		echo -e "\nint main(int argc, char *argv[])\n{\n\treturn 0;\n}" > $1
-	else
- 		echo "Usage: temp <c file>"
-	fi
-}
-
 # converts hexadecimal to decimal
 hex ()
 {
@@ -289,6 +276,12 @@ dirsize ()
   egrep '^ *[0-9.]*M' /tmp/list
   egrep '^ *[0-9.]*G' /tmp/list
   rm -rf /tmp/list
+}
+
+# inodes - gives detailed information of the number of uses of local directories
+inodes ()
+{
+	echo "Detailed Inode usage for: $(pwd)" ; for d in `find -maxdepth 1 -type d |cut -d\/ -f2 |grep -xv . |sort`; do c=$(find $d |wc -l) ; printf "$c\t\t- $d\n" ; done ; printf "Total: \t\t$(find $(pwd) | wc -l)\n"
 }
 
 # up - traverses up the directory list
